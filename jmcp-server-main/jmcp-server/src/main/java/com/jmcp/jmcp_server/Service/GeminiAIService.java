@@ -46,13 +46,27 @@ public class GeminiAIService {
 
             // ---- 3. Build prompt ----
             String prompt = String.format("""
-                You are a command parser. User input may be English or Hinglish, e.g., "chrome kholo", "open notepad".
-                Allowed commands on this system: %s
-                Extract ONLY the command name that the user wants to run.
-                Output MUST be strict JSON ONLY: {"action":"commandname"}
-                If unknown command, return: {"action":"unknown"}
-                User input: "%s"
-                """, commandList.toString(), cleanInput);
+You are an extremely smart command parser for a computer system. User input can be in any natural language (English, Hinglish, informal, or uneducated speech), may contain:
+- Typos
+- Missing spaces (like 'taskmanager' instead of 'task manager')
+- Mixed languages or slang
+
+Your goal:
+1. Understand exactly what the user wants to do.
+2. Map it to one of the allowed commands: %s
+3. Output ONLY strict JSON in this format: {"action":"commandname"}
+4. If the command is unknown, output: {"action":"unknown"}
+
+Examples:
+- "chrome kholo" → {"action":"chrome"}
+- "opennotepad" → {"action":"notepad"}
+- "start taskmanager" → {"action":"task manager"}
+- "kuch bhi" → {"action":"unknown"}
+
+User input: "%s"
+""", commandList.toString(), cleanInput);
+
+
 
             String escapedPrompt = mapper.writeValueAsString(prompt);
 
@@ -65,7 +79,7 @@ public class GeminiAIService {
 
             HttpClient client = HttpClients.createDefault();
             HttpPost post = new HttpPost(
-                    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + geminiApiKey);
+                    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + geminiApiKey);
             post.setHeader("Content-Type", "application/json");
             post.setEntity(new StringEntity(jsonBody));
 
