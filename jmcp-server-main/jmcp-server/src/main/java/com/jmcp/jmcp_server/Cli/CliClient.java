@@ -113,7 +113,11 @@ public class CliClient {
     private static void printRpcResponse(String response) {
         if (response.contains("\"result\":")) {
             String result = extractResult(response);
-            System.out.println(result);
+            if (result.startsWith("✅ Opened ")) {
+                System.out.println(result);
+            } else {
+                System.out.println(result);
+            }
         } else if (response.contains("\"error\":")) {
             String error = extractError(response);
             System.out.println("Error: " + error);

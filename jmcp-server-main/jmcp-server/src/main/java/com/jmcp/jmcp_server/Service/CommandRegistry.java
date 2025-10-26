@@ -75,10 +75,19 @@ public class CommandRegistry {
             commandMap.put("magnifier", "magnify.exe");
             commandMap.put("on-screen keyboard", "osk.exe");
             commandMap.put("narrator", "narrator.exe");
+            commandMap.put("go to", "browser");
+            commandMap.put("open", "browser");
+            commandMap.put("browse", "browser");
 
             // Media
             commandMap.put("sound recorder", "soundrecorder.exe");
             commandMap.put("media player", "wmplayer.exe");
+
+            // Add browser commands
+            commandMap.put("go to", "browser");
+            commandMap.put("open", "browser");
+            commandMap.put("browse", "browser");
+            commandMap.put("open_website", "open_website"); // Add the new command
 
             // Add aliases
             addAlias("task manager", "taskmgr", "task mgr");
@@ -87,6 +96,10 @@ public class CommandRegistry {
             addAlias("file explorer", "explorer", "files");
             addAlias("command prompt", "cmd", "terminal");
             addAlias("control panel", "control");
+            addAlias("go to", "goto");
+            addAlias("open", "launch");
+            addAlias("browse", "surf");
+            addAlias("open_website", "website", "url"); // Add aliases for the new command
 
         } else if (os.contains("mac")) {
             // System Preferences & Utilities
